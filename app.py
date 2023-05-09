@@ -65,8 +65,13 @@ if __name__ == "__main__":
 
     with open("result.json", "w") as outfile:
         json.dump(result, outfile)
+    
+    with open("export.csv", "w") as outfile:
+        outfile.write("Steam ID,Game,Price\n")
 
     for appKey in priceDict:
         with open("export.csv", "a") as outfile:
-            gameLabel = priceDict[appKey]['name'] if priceDict[appKey]['name'] is not None and len(priceDict[appKey]['name']) == 0 else priceDict[appKey]['name'].replace(",","")
+            gameLabel = priceDict[appKey]['name'] \
+                if priceDict[appKey]['name'] is not None and len(priceDict[appKey]['name']) == 0 \
+                else priceDict[appKey]['name'].replace(",","").replace("\"","")
             outfile.write(appKey + "," + gameLabel + "," + priceDict[appKey]['final_formatted'] + "\n")
