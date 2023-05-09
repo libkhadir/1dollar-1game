@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "1euro-1game"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+packages = [{include = "1euro_1game"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+requests = "^2.30.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
