@@ -1,0 +1,45 @@
+name: Data update
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  '00 * * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  data-update-job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.11"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -q poetry
+      - name: Install project
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install --no-root
+          
+      - name: Update data
+        run: |
+          source .venv/bin/activate
+          python app.py
+          
+      - name: Push result
+        run: |
+         git config --global user.email "tkhadir.dev@gmail.com"
+         git config --global user.name "tkhadir"
+         git add export.csv
+         git add result.json
+         git add .process
+         git commit -m "feat: add results"
+         git push origin
