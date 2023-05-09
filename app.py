@@ -68,4 +68,5 @@ if __name__ == "__main__":
 
     for appKey in priceDict:
         with open("export.csv", "a") as outfile:
-            outfile.write(appKey + "," + priceDict[appKey]['name'] + "," + priceDict[appKey]['final_formatted'] + "\n")
+            gameLabel = priceDict[appKey]['name'] if priceDict[appKey]['name'] is not None and len(priceDict[appKey]['name']) == 0 else priceDict[appKey]['name'].replace(",","")
+            outfile.write(appKey + "," + gameLabel + "," + priceDict[appKey]['final_formatted'] + "\n")
