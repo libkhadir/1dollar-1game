@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>1euro = 1game</title>
+  </head>
+  <body>
+    <div id="csv-table"></div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
+    <script>
+      const table = document.getElementById("csv-table");
+      const download_url = 'https://raw.githubusercontent.com/libkhadir/1euro-1game/main/export.csv'
+      Papa.parse(download_url, {
+          download: true,
+          header: true,
+          complete: (results) => {
+            const data = results.data;
+            let html = "<table><thead><tr>";
+            for (const key in data[0]) {
+              html += `<th>${key}</th>`;
+            }
+            html += "</tr></thead><tbody>";
+            data.forEach((row) => {
+              html += "<tr>";
+              for (const key in row) {
+                html += `<td>${row[key]}</td>`;
+              }
+              html += "</tr>";
+            });
+            html += "</tbody></table>";
+            table.innerHTML = html;
+          },
+        });
+    </script>
+  </body>
+</html>
