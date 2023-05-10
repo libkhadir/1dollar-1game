@@ -38,7 +38,7 @@ def filter_by_price(appids):
                             and 'price_overview' in priceResponse[appKey]['data'] \
                             and priceResponse[appKey]['data']['price_overview']['final'] <= 100:
                         priceDict[appKey] = priceResponse[appKey]['data']['price_overview']
-            if index % 1000 == 0:
+            if index % 20000 == 0:
                 save_checkpoint(index)
                 break
         else:
