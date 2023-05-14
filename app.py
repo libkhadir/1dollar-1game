@@ -46,6 +46,9 @@ def filter_by_price(appids):
                 break
         elif index > checkpoint:
             appsParam = appsParam + str(app) if len(appsParam) == 0 else appsParam + "," + str(app)
+        elif index == threshold:
+            save_checkpoint(index)
+            checkpoint = index
     print("checkpoint=", checkpoint)
     return priceDict
 
