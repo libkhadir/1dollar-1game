@@ -24,7 +24,7 @@ def filter_by_price(appids):
         checkpoint = -1
     appsParam = ""
     for index, app in enumerate(appids):
-        if index > checkpoint and (index == threshold or index % 100 == 0) and len(appsParam) > 0:
+        if index > checkpoint and (index == threshold or index % 100 == 0) and len(appsParam) > 0 and index > 0:
             try:
                 priceResponse = requests.get("https://store.steampowered.com/api/appdetails?filters=price_overview&appids={}".format(appsParam)).json()
             except:
