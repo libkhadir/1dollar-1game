@@ -30,25 +30,18 @@ def filter_by_price(appids):
             except:
                 priceResponse = None
             appsParam = ""
-            if priceResponse is None:
-                save_checkpoint(index)
-                checkpoint=index
-                continue
-            else:
+            if priceResponse is not None:
                 for appKey in priceResponse:
                     if 'data' in priceResponse[appKey] \
                             and 'price_overview' in priceResponse[appKey]['data'] \
                             and priceResponse[appKey]['data']['price_overview']['final'] <= 100:
                         priceDict[appKey] = priceResponse[appKey]['data']['price_overview']
-            if index % 20000 == 0:
+            if index % 20000 == 0 or index == threshold:
                 save_checkpoint(index)
                 checkpoint=index
                 break
         elif index > checkpoint:
             appsParam = appsParam + str(app) if len(appsParam) == 0 else appsParam + "," + str(app)
-        elif index == threshold:
-            save_checkpoint(index)
-            checkpoint = index
     print("checkpoint=", checkpoint)
     return priceDict
 
