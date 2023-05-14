@@ -18,13 +18,15 @@ def get_applications():
 def filter_by_price(appids):
     priceDict = {}
     threshold = len(appids) - 1
+    print("threshold=", threshold)
     checkpoint = get_checkpoint()
+    print("checkpoint=", checkpoint)
     if checkpoint == threshold:
         save_checkpoint(0)
         checkpoint = -1
     appsParam = ""
     for index, app in enumerate(appids):
-        if index > 0 and index > checkpoint and (index == threshold or index % 100 == 0):
+        if index > checkpoint and (index == threshold or index % 100 == 0) and len(appsParam) > 0:
             try:
                 priceResponse = requests.get("https://store.steampowered.com/api/appdetails?filters=price_overview&appids={}".format(appsParam)).json()
             except:
@@ -43,6 +45,7 @@ def filter_by_price(appids):
                 break
         elif index > checkpoint:
             appsParam = appsParam + str(app) if len(appsParam) == 0 else appsParam + "," + str(app)
+    print("checkpoint=", checkpoint)
     return priceDict
 
 if __name__ == "__main__":
