@@ -42,6 +42,7 @@ def filter_by_price(appids):
                         priceDict[appKey] = priceResponse[appKey]['data']['price_overview']
             if index % 20000 == 0:
                 save_checkpoint(index)
+                checkpoint=index
                 break
         elif index > checkpoint:
             appsParam = appsParam + str(app) if len(appsParam) == 0 else appsParam + "," + str(app)
