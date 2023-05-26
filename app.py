@@ -19,7 +19,7 @@ def filter_by_price(appids):
     priceDict = {}
     threshold = len(appids) - 1
     checkpoint = get_checkpoint()
-    if checkpoint == threshold:
+    if checkpoint >= threshold:
         save_checkpoint(0)
         checkpoint = -1
     appsParam = ""
